@@ -34,6 +34,12 @@ config.vm.define "node1" do |n|
   n.vm.network :private_network, ip:"172.16.0.22"
 end
 
+#node2
+config.vm.define "node2" do |n|
+  n.vm.hostname = "node2.test"
+  n.vm.network :private_network, ip:"172.16.0.23"
+end
+
   # Disable automatic box update checking. If you disable this, then
   # boxes will only be checked for updates when the user runs
   # `vagrant box outdated`. This is not recommended.

@@ -3,7 +3,7 @@ sudo swapoff -a
 #disable swap in /etc/fstab on master and nodes
 
 #sudo apt-get upgrade
-sudo apt-get install -y git ansible mc screen net-tools
+sudo apt-get install -y git ansible mc screen net-tools links
 
 #install docker
 #sudo apt-get remove docker docker-engine docker.io containerd runc
