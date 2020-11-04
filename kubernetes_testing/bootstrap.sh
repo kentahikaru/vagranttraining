@@ -5,6 +5,16 @@ sudo swapoff -a
 #sudo apt-get upgrade
 sudo apt-get install -y git ansible mc screen net-tools links
 
+#install NFS -- https://www.raspberrypi.org/documentation/configuration/nfs.md
+#on master
+sudo apt install nfs-kernel-server
+#set up /etc/exports
+sudo systemctl restart nfs-kernel-server
+#on node
+sudo apt install nfs-common
+#mount -t nfs -o proto=tcp,port=2049 <nfs-server-IP>:/ /mnt
+
+
 #install docker
 #sudo apt-get remove docker docker-engine docker.io containerd runc
 sudo apt-get update
