@@ -1,0 +1,97 @@
+# ---
+# kind: PersistentVolumeClaim
+# apiVersion: v1
+# metadata:
+#   name: boincvolume
+#   # namespace: boinc
+# spec:
+#   accessModes:
+#     - ReadWriteOnce
+#   resources:
+#     requests:
+#       storage: 1Gi
+# ---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: boincclient
+  # namespace: boinc
+  labels:
+    app: boincclient
+spec:
+  replicas: 1
+  template:
+    metadata:
+      name: boincclient
+      # namespace: boinc
+      labels:
+        app: boincclient
+    spec:
+      containers:
+        - name: boincclient
+          image: boinc/client
+          # command: ["/usr/bin/boinccmd"]
+          # args: [" --acct_mgr attach http://bam.boincstats.com/ <username> <pass>"]
+          # command: ["/bin/sh", "-c"]
+          # args: 
+          #   - boinccmd --project_attach http://setiathome.berkeley.edu <account_key>;
+          #     boinccmd --project_attach https://lhcathome.cern.ch/lhcathome <account_key>;
+          #     boinccmd --project_attach http://www.cosmologyathome.org/  <account_key>;
+          #     boinccmd --project_attach http://einstein.phys.uwm.edu/ <account_key>;
+          env:
+          - name: TZ
+            value: "Europe/Prague"
+          - name: BOINC_GUI_RPC_PASSWORD
+            value: "123"
+          - name: BOINC_CMD_LINE_OPTIONS
+            value: "--allow_remote_gui_rpc"
+          # volumeMounts:
+          #   - mountPath: /var/lib/boinc
+          #     name: boincvolume
+          # volumeMounts:
+          # - name: boincvolume
+          #   mountPath: "/var/lib/boinc"
+          ports:
+          - containerPort: 80
+            name: http
+            protocol: TCP
+          - containerPort: 443
+            name: https
+            protocol: TCP
+          - containerPort: 31416
+            name: manager
+            protocol: TCP
+      # volumes:
+      #   - name: boincvolume
+      #     persistentVolumeClaim:
+      #       claimName: boincvolume
+      # volumes:
+      #   - name: boincvolume
+      #     nfs:
+      #       server: 172.16.0.21  ----   neeeds permanent bolume a permanent volume claim
+      #       path: "/"
+  selector:
+    matchLabels:
+      app: boincclient
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: boincclient
+  # namespace: boinc
+  # annotations:
+  #   metallb.universe.tf/address-pool: #Replace this comment with your MetalLB Pool Name
+spec:
+  selector:
+    app: boincclient
+  ports:
+    - port: 80
+      name: http
+      protocol: TCP
+    - port: 443
+      name: https
+      protocol: TCP
+    - port: 31416
+      name: manager
+      protocol: TCP
+  type: LoadBalancer
