@@ -59,18 +59,3 @@ sudo systemctl enable kubelet && sudo systemctl start kubelet
 # kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/master/Documentation/kube-flannel.yml
 #apply flannel for vagrant with added --iface=eth1
 # kubectl apply -f kube-flannel.yml
-
-
-
-
-
-#######
-#vagrant & flannel troubleshooting
-# https://coreos.com/flannel/docs/latest/troubleshooting.html
-# https://github.com/kubernetes/kubernetes/issues/39701
-
-#fix flannel on node
-# kubectl patch node node1 -p '{"spec":{"podCIDR":"10.244.0.0/16"}}'
-
-#issue for node join
-#https://github.com/kubernetes/kubernetes/issues/58876
