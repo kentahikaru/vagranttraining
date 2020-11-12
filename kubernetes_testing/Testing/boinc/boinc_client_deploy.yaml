@@ -30,13 +30,9 @@ spec:
       containers:
         - name: boincclient
           image: boinc/client
-          command: ["/bin/sh", "-c"]
-          args: 
-            - /usr/bin/start-boinc.sh;
-              /usr/bin/boinccmd --project_attach http://setiathome.berkeley.edu 8ac8591993f98bf2ed58bd7e97a17b00;
-              /usr/bin/boinccmd --project_attach https://lhcathome.cern.ch/lhcathome 13ac3c6bcffd837cd9d4decf805cbd48;
-              /usr/bin/boinccmd --project_attach http://www.cosmologyathome.org/  4c7fd21d170f6865fe07b2afee8f69c3;
-              /usr/bin/boinccmd --project_attach http://einstein.phys.uwm.edu/ 5bfa973a9b30ca880a001a52136be551;
+          command: ["/bin/sh", "-c", "/usr/bin/start-boinc.sh; /usr/bin/boinccmd --project_attach http://setiathome.berkeley.edu 8ac8591993f98bf2ed58bd7e97a17b00; /usr/bin/boinccmd --project_attach https://lhcathome.cern.ch/lhcathome 13ac3c6bcffd837cd9d4decf805cbd48; /usr/bin/boinccmd --project_attach http://www.cosmologyathome.org/  4c7fd21d170f6865fe07b2afee8f69c3; /usr/bin/boinccmd --project_attach http://einstein.phys.uwm.edu/ 5bfa973a9b30ca880a001a52136be551;"]
+          # args: 
+          #   - "/usr/bin/start-boinc.sh; /usr/bin/boinccmd --project_attach http://setiathome.berkeley.edu 8ac8591993f98bf2ed58bd7e97a17b00; /usr/bin/boinccmd --project_attach https://lhcathome.cern.ch/lhcathome 13ac3c6bcffd837cd9d4decf805cbd48; /usr/bin/boinccmd --project_attach http://www.cosmologyathome.org/  4c7fd21d170f6865fe07b2afee8f69c3; /usr/bin/boinccmd --project_attach http://einstein.phys.uwm.edu/ 5bfa973a9b30ca880a001a52136be551;"
           env:
           - name: TZ
             value: "Europe/Prague"
