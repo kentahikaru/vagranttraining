@@ -1,0 +1,53 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: boinc-deployment
+  labels:
+    app: boinc
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: boinc
+  template:
+    metadata:
+      labels:
+        app: boinc
+    spec:
+      containers:
+      # run boinc ==   sudo docker run --expose 31416 -p 172.16.0.21:31416:31416 -d   --name boinc   --net=host   --pid=host   -v /opt/appdata/boinc:/var/lib/boinc   -e BOINC_GUI_RPC_PASSWORD="123"   -e BOINC_CMD_LINE_OPTIONS="--allow_remote_gui_rpc"   boinc/client 
+      # - name: boinc
+      #   image: boinc/client:arm32v7
+      #   env:
+      #     - name: BOINC_GUI_RPC_PASSWORD
+      #       value: "123"
+      #     - name: BOINC_CMD_LINE_OPTIONS
+      #       value: "--allow_remote_gui_rpc"
+      #   ports:
+      #     - name: rtc31416
+      #       containerPort: 31416
+      #       hostPort: 31416
+      # - name: boinc-manager-web
+      #   image: adamrdocz/boinc-manager-web:arm32v7
+      #   env:
+      #     - name: ASPNETCORE_URLS
+      #       value: "https://+:443;http://+:80"
+      #   ports:
+      #   - name: port80
+      #     containerPort: 80
+      #     hostPort: 80
+      #   - name: port443
+      #     containerPort: 443
+      #     hostPort: 443
+      - name: boinc-barkley
+        image: kayvan/boinc
+        command: ["/usr/local/bin/boinccmd"]
+        args: [" --project_attach http://setiathome.berkeley.edu 8ac8591993f98bf2ed58bd7e97a17b00", " --dir /new_projects"]
+        volumeMounts:
+          - name: boinc-nfs
+            mountPath: "/new_projects"
+      volumes:
+        - name: boinc-nfs
+          nfs:
+            server: 172.16.0.21
+            path: "/"
