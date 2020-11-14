@@ -45,7 +45,9 @@ sudo apt-get install -y kubectl kubelet kubeadm
 
 sudo systemctl enable kubelet && sudo systemctl start kubelet
 
-
+#!!!!!turn off swap
+#!!!!!sudo swapoff -a
+#!!!!!disable swap in /etc/fstab on master and nodes
 
 #init with flannel  
 #https://opensource.com/article/20/6/kubernetes-raspberry-pi
