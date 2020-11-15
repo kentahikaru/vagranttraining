@@ -1,0 +1,67 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: boinccosmology
+  # namespace: boinc
+  labels:
+    app: boinccosmology
+spec:
+  replicas: 1
+  template:
+    metadata:
+      name: boinccosmology
+      # namespace: boinc
+      labels:
+        app: boinccosmology
+    spec:
+      containers:
+        - name: boinccosmology
+          image: boinc/client
+          env:
+          - name: COSMOLOGYACCESSKEY
+            valueFrom:
+              secretKeyRef:
+                name: boinc-cosmology-appkey
+                key: cosmology-appkey
+          - name: TZ
+            value: "Europe/Prague"
+          - name: BOINC_GUI_RPC_PASSWORD
+            value: "123"
+          - name: BOINC_CMD_LINE_OPTIONS
+            value: "--allow_remote_gui_rpc --attach_project http://www.cosmologyathome.org/  $COSMOLOGYACCESSKEY"
+          ports:
+          - containerPort: 80
+            name: http
+            protocol: TCP
+          - containerPort: 443
+            name: https
+            protocol: TCP
+          - containerPort: 31416
+            name: manager
+            protocol: TCP
+  selector:
+    matchLabels:
+      app: boinccosmology
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: boinccosmology
+  # namespace: boinc
+  # annotations:
+  #   metallb.universe.tf/address-pool: #Replace this comment with your MetalLB Pool Name
+spec:
+  selector:
+    app: boinccosmology
+  ports:
+    - port: 80
+      name: http
+      protocol: TCP
+    - port: 443
+      name: https
+      protocol: TCP
+    - port: 31416
+      name: manager
+      protocol: TCP
+  type: LoadBalancer

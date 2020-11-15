@@ -1,0 +1,67 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: boinclhc
+  # namespace: boinc
+  labels:
+    app: boinclhc
+spec:
+  replicas: 1
+  template:
+    metadata:
+      name: boinclhc
+      # namespace: boinc
+      labels:
+        app: boinclhc
+    spec:
+      containers:
+        - name: boinclhc
+          image: boinc/client
+          env:
+          - name: LHCACCESSKEY
+            valueFrom:
+              secretKeyRef:
+                name: boinc-lhc-appkey
+                key: lhc-appkey
+          - name: TZ
+            value: "Europe/Prague"
+          - name: BOINC_GUI_RPC_PASSWORD
+            value: "123"
+          - name: BOINC_CMD_LINE_OPTIONS
+            value: "--allow_remote_gui_rpc --attach_project https://lhcathome.cern.ch/lhcathome $LHCACCESSKEY"
+          ports:
+          - containerPort: 80
+            name: http
+            protocol: TCP
+          - containerPort: 443
+            name: https
+            protocol: TCP
+          - containerPort: 31416
+            name: manager
+            protocol: TCP
+  selector:
+    matchLabels:
+      app: boinclhc
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: boinclhc
+  # namespace: boinc
+  # annotations:
+  #   metallb.universe.tf/address-pool: #Replace this comment with your MetalLB Pool Name
+spec:
+  selector:
+    app: boinclhc
+  ports:
+    - port: 80
+      name: http
+      protocol: TCP
+    - port: 443
+      name: https
+      protocol: TCP
+    - port: 31416
+      name: manager
+      protocol: TCP
+  type: LoadBalancer
