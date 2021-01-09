@@ -17,7 +17,8 @@ spec:
     spec:
       containers:
         - name: boinclhc
-          image: boinc/client
+          # image: boinc/client
+          image: hikarukenta/boinc-client:amd
           env:
           - name: LHCACCESSKEY
             valueFrom:

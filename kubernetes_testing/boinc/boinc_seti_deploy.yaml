@@ -40,6 +40,12 @@ spec:
           - containerPort: 31416
             name: manager
             protocol: TCP
+        # - name: boincmanager
+        #   image: adamradocz/boinc-manager-web
+        #   ports: 
+        #   - containerPort: 80
+        #     name: http
+        #     protocol: TCP
   selector:
     matchLabels:
       app: boincseti

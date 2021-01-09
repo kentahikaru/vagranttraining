@@ -1,0 +1,1 @@
+docker run -d --name boinc --net=host --pid=host -v /opt/appdata/boinc:/var/lib/boinc -e BOINC_GUI_RPC_PASSWORD="123" -e BOINC_CMD_LINE_OPTIONS="--allow_remote_gui_rpc --attach_project http://setiathome.berkeley.edu <api_key> --attach_project https://lhcathome.cern.ch/lhcathome <api_key>" boinc/client
