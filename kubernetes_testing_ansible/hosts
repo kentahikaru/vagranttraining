@@ -1,7 +1,0 @@
-[bramble]
-172.16.0.31
-172.16.0.32
-
-[bramble:vars]
-ansible_ssh_user=vagrant
-ansible_ssh_private_key_file=~/.vagrant.d/insecure_private_key
