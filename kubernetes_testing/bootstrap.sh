@@ -1,3 +1,5 @@
+# https://opensource.com/article/20/6/kubernetes-raspberry-pi
+
 #turn off swap
 sudo swapoff -a
 #disable swap in /etc/fstab on master and nodes
