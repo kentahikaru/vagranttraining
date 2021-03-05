@@ -1,4 +1,5 @@
 # https://opensource.com/article/20/6/kubernetes-raspberry-pi
+# https://blog.alexellis.io/kubernetes-in-10-minutes/
 
 #turn off swap
 sudo swapoff -a
