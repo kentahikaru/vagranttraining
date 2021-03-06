@@ -2,8 +2,12 @@
 # https://blog.alexellis.io/kubernetes-in-10-minutes/
 
 #turn off swap
-sudo swapoff -a
+#sudo swapoff -a
 #disable swap in /etc/fstab on master and nodes
+
+sudo dphys-swapfile swapoff
+sudo dphys-swapfile uninstall
+sudo systemctl disable dphys-swapfile
 
 #sudo apt-get upgrade
 sudo apt-get install -y git ansible mc screen net-tools links
